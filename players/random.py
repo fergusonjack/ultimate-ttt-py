@@ -57,19 +57,23 @@ class Random(StdOutPlayer):
             if tmpBoardMe.winner == Player.ME:
                 count += 1
 
+        #if board is won by other player -1
         if tmpBoardMe.is_finished and tmpBoardMe.winner == Player.OPPONENT:
             count -= 1
 
-
-        if tmpBoardMe.is_finished and self.winnableBy(tmpBoardMe) == Player.OPPONENT:
+        #if the current board can be won by them
+        #if tmpBoardMe.is_finished and self.winnableBy(tmpBoardMe) == Player.OPPONENT:
             count -= 1
 
+        #board where they will get sent is winnable by them -1
         if self.winnableBy(self.main_board.get_sub_board(MainBoardCoords(coords.row, coords.col))) == Player.OPPONENT:
             count -= 1
 
+        #board where they will get sent is winable by me
         if self.winnableBy(self.main_board.get_sub_board(MainBoardCoords(coords.row, coords.col))) == Player.ME:
             count += 1
 
+        #blocking the other player from wimnning
         tmpBoardOp = sub_board.add_opponent_move(coords)
         if tmpBoardOp.is_finished and tmpBoardOp.winner == Player.OPPONENT:
             count += 1
